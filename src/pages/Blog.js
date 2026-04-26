@@ -12,6 +12,22 @@ const Blog = () => {
     },
     {
       id: 2,
+      title: 'First Aid for Street Cows & Bulls',
+      excerpt: 'Stray cattle often ingest plastic or face road injuries. Learn how to provide temporary relief and which specialized NGOs to contact for cow rescue.',
+      date: 'May 05, 2026',
+      category: 'Cattle Welfare',
+      image: 'https://images.unsplash.com/photo-1596733430284-f74370603735?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 3,
+      title: 'Helping Injured Birds in Summer',
+      excerpt: 'Heatstroke is common among birds like pigeons and sparrows. Discover how simple water bowls and "Sakoras" can save lives in your balcony.',
+      date: 'April 20, 2026',
+      category: 'Avian Care',
+      image: 'https://images.unsplash.com/photo-1552728089-57bdde30ebe3?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 4,
       title: 'Understanding Pet First Aid',
       excerpt: 'Knowing how to react in a pet emergency can save lives. Here is a comprehensive guide every pet owner should bookmark.',
       date: 'April 28, 2026',
@@ -19,7 +35,15 @@ const Blog = () => {
       image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=600&auto=format&fit=crop&q=80',
     },
     {
-      id: 3,
+      id: 5,
+      title: 'Street Cat Welfare & TNR',
+      excerpt: 'Street cats face unique challenges. Learn about the importance of Trap-Neuter-Return (TNR) and why feeding milk is actually harmful to cats.',
+      date: 'April 10, 2026',
+      category: 'Cat Care',
+      image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 6,
       title: 'The Impact of Local Animal NGOs',
       excerpt: 'Highlighting the incredible work being done by local rescue organizations and how you can support them in your city.',
       date: 'March 15, 2026',
@@ -32,7 +56,7 @@ const Blog = () => {
     <div className="page-container">
       <div className="page-header">
         <h1><span className="gradient-text">Latest Articles</span></h1>
-        <p>Insights, tips, and stories from the animal care community.</p>
+        <p>Expert advice and community stories covering dogs, cats, cows, and more.</p>
       </div>
 
       <div className="blog-grid">
