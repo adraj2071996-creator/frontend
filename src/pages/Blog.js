@@ -8,7 +8,7 @@ const Blog = () => {
       excerpt: 'Keep your furry friends safe and cool during hot Indian summers with these veterinarian-approved tips that every pet parent should know.',
       date: 'May 12, 2026',
       category: 'Pet Health',
-      image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=800&q=80',
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ const Blog = () => {
       excerpt: 'Stray cattle often ingest plastic or face road injuries. Learn how to provide temporary relief and which specialized NGOs to contact for cow rescue.',
       date: 'May 05, 2026',
       category: 'Cattle Welfare',
-      image: 'https://images.unsplash.com/photo-1596733430284-f74370603735?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1527153857715-3908f2bae5e8?w=800&q=80',
     },
     {
       id: 3,
@@ -24,7 +24,7 @@ const Blog = () => {
       excerpt: 'Heatstroke is common among birds like pigeons and sparrows. Discover how simple water bowls and "Sakoras" can save lives in your balcony.',
       date: 'April 20, 2026',
       category: 'Avian Care',
-      image: 'https://images.unsplash.com/photo-1552728089-57bdde30ebe3?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1444464666168-49d633b867ad?w=800&q=80',
     },
     {
       id: 4,
@@ -32,7 +32,7 @@ const Blog = () => {
       excerpt: 'Knowing how to react in a pet emergency can save lives. Here is a comprehensive guide every pet owner should bookmark.',
       date: 'April 28, 2026',
       category: 'First Aid',
-      image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=800&q=80',
     },
     {
       id: 5,
@@ -40,7 +40,7 @@ const Blog = () => {
       excerpt: 'Street cats face unique challenges. Learn about the importance of Trap-Neuter-Return (TNR) and why feeding milk is actually harmful to cats.',
       date: 'April 10, 2026',
       category: 'Cat Care',
-      image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&q=80',
     },
     {
       id: 6,
@@ -48,7 +48,7 @@ const Blog = () => {
       excerpt: 'Highlighting the incredible work being done by local rescue organizations and how you can support them in your city.',
       date: 'March 15, 2026',
       category: 'Community',
-      image: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&auto=format&fit=crop&q=80',
+      image: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=800&q=80',
     },
   ];
 
