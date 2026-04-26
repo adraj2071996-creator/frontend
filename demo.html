@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animal Helper - Beautiful UI Demo</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- React & ReactDOM (Development Versions via CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel for parsing JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Axios for API calls -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <style>
+    :root {
+      --primary-color: #4F46E5;
+      --primary-hover: #4338CA;
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --text-main: #111827;
+      --text-muted: #6B7280;
+      --border-color: #E5E7EB;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-color), #8B5CF6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Search Form */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .search-form {
+      display: flex;
+      width: 100%;
+      max-width: 650px;
+      box-shadow: var(--shadow-md);
+      border-radius: 9999px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .search-form:focus-within {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
+    }
+
+    .search-input {
+      flex-grow: 1;
+      border: none;
+      padding: 1.25rem 2rem;
+      font-size: 1.125rem;
+      outline: none;
+      background: transparent;
+      color: var(--text-main);
+    }
+
+    .search-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0 2.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .search-button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Filters */
+    .filters-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .filter-btn {
+      background-color: var(--card-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 1.5rem;
+      border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .filter-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Grid & Cards */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: #C7D2FE;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .card-type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary-color);
+      background-color: #EEF2FF;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+    }
+
+    .card-distance {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .card-address {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .card-phone {
+      color: var(--text-main);
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-phone:hover {
+      color: var(--primary-color);
+    }
+
+    /* States */
+    .state-container {
+      text-align: center;
+      padding: 4rem 2rem;
+      background-color: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border-color);
+    }
+
+    .spinner {
+      border: 4px solid rgba(79, 70, 229, 0.1);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border-left-color: var(--primary-color);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .search-form {
+        flex-direction: column;
+        border-radius: var(--radius-md);
+      }
+
+      .search-button {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 2.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="root"></div>
+
+  <!-- React Code -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const SearchBar = ({ onSearch, loading }) => {
+      const [pincode, setPincode] = useState('');
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (pincode.length === 6) onSearch(pincode);
+        else alert('Please enter a 6-digit Indian pincode');
+      };
+      return (
+        <div className="search-container">
+          <form onSubmit={handleSubmit} className="search-form">
+            <input
+              type="text" value={pincode}
+              onChange={(e) => setPincode(e.target.value.replace(/[^0-9]/g, ''))}
+              placeholder="Enter 6-digit Pincode (e.g., 110001)"
+              className="search-input" maxLength={6} disabled={loading}
+            />
+            <button type="submit" className="search-button" disabled={loading || pincode.length !== 6}>
+              {loading ? 'Searching...' : 'Search'}
+            </button>
+          </form>
+        </div>
+      );
+    };
+
+    const Filters = ({ selected, onSelect }) => {
+      const cats = [
+        { id: 'all', label: 'All Services' }, { id: 'veterinary', label: 'Veterinary' },
+        { id: 'hospital', label: 'Hospital' }, { id: 'ngo', label: 'NGO' },
+        { id: 'grooming', label: 'Grooming' }, { id: 'first_aid', label: 'First Aid' }
+      ];
+      return (
+        <div className="filters-container">
+          {cats.map(c => (
+            <button key={c.id} className={`filter-btn ${selected === c.id ? 'active' : ''}`} onClick={() => onSelect(c.id)}>
+              {c.label}
+            </button>
+          ))}
+        </div>
+      );
+    };
+
+    const ServiceCard = ({ service }) => {
+      const formatType = (str) => str.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      return (
+        <div className="service-card">
+          <div className="card-header">
+            <span className="card-type">{formatType(service.type)}</span>
+            <span className="card-distance">📍 {service.distance.toFixed(1)} km</span>
+          </div>
+          <h3 className="card-title">{service.name}</h3>
+          <p className="card-address">{service.address}</p>
+          <div className="card-footer">
+            {service.phone ? (
+              <a href={`tel:${service.phone}`} className="card-phone">📞 {service.phone}</a>
+            ) : <span className="card-phone" style={{ color: '#9CA3AF' }}>No phone</span>}
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [loading, setLoading] = useState(false);
+      const [results, setResults] = useState([]);
+      const [searched, setSearched] = useState(false);
+      const [selectedCat, setSelectedCat] = useState('all');
+
+      // Mock Data since the backend doesn't exist yet!
+      const mockSearch = () => {
+        setLoading(true);
+        setSearched(true);
+        setTimeout(() => {
+          const fakeData = [
+            [
+              {
+                "id": 1,
+                "name": "Xoxotails Pet Store",
+                "type": "Pet Grooming & Store",
+                "address": "Samrat Ashoka Road, Greater Noida Sector 1, Greater Noida - 201306",
+                "distance": 0.5,
+                "phone": "+91 91155 55811"
+              },
+              {
+                "id": 2,
+                "name": "Aria Pet Clinic",
+                "type": "Veterinary & Grooming",
+                "address": "Sector-1, Bisrakh, Greater Noida West - 201306",
+                "distance": 0.8,
+                "phone": "+91 99994 13919"
+              },
+              {
+                "id": 3,
+                "name": "Pawsitive Pet Care",
+                "type": "Veterinary & Grooming",
+                "address": "Lower Ground Floor, Gaur City 2, Greater Noida - 201309",
+                "distance": 2.4,
+                "phone": "+91 99114 47355"
+              },
+              {
+                "id": 4,
+                "name": "Bark & Bubbles",
+                "type": "Pet Grooming Salon",
+                "address": "Gaur City Road, Gaur City 1, Greater Noida - 201308",
+                "distance": 3.1,
+                "phone": "+91 88002 24510"
+              },
+              {
+                "id": 5,
+                "name": "SuperVet Pet Clinic",
+                "type": "Veterinary & Spa",
+                "address": "Behind Bark & Bubbles, Gaur City 1, Greater Noida - 201308",
+                "distance": 3.2,
+                "phone": "+91 99100 04870"
+              },
+              {
+                "id": 6,
+                "name": "Vet Plus Pet Clinic",
+                "type": "Veterinary",
+                "address": "Gamma 1, Greater Noida - 201308",
+                "distance": 5.2,
+                "phone": "+91 98111 96989"
+              },
+              {
+                "id": 7,
+                "name": "Mph Max Pet Vet Hospital",
+                "type": "Veterinary & Grooming",
+                "address": "Knowledge Park 1, Greater Noida - 201310",
+                "distance": 6.5,
+                "phone": "+91 98101 24707"
+              },
+              {
+                "id": 8,
+                "name": "Simba Pet Care & Boarding",
+                "type": "Pet Boarding & Grooming",
+                "address": "Main Road, Bisrakh, Greater Noida West - 201306",
+                "distance": 1.2,
+                "phone": "+91 96500 04111"
+              },
+              {
+                "id": 9,
+                "name": "Huskyindia0 World",
+                "type": "Pet Grooming",
+                "address": "Opposite Jm International School, Panchsheel Green, Greater Noida - 201306",
+                "distance": 1.9,
+                "phone": "+91 95822 22708"
+              },
+              {
+                "id": 10,
+                "name": "The Groomery",
+                "type": "Pet Spa",
+                "address": "Chuharpur Chi 3, Greater Noida - 201310",
+                "distance": 7.3,
+                "phone": "+91 99119 92244"
+              }
+            ]];
+          setResults(fakeData);
+          setLoading(false);
+        }, 1500);
+      };
+
+      const filteredResults = selectedCat === 'all' ? results : results.filter(r => r.type === selectedCat);
+
+      return (
+        <div className="container">
+          <header className="header">
+            <h1>Animal Helper</h1>
+            <p>Find nearby veterinary clinics, hospitals, and pet services instantly</p>
+          </header>
+
+          <SearchBar onSearch={mockSearch} loading={loading} />
+
+          {searched && <Filters selected={selectedCat} onSelect={setSelectedCat} />}
+
+          {loading && (
+            <div className="state-container">
+              <div className="spinner"></div>
+              <h2>Finding nearby services...</h2>
+              <p style={{ color: '#6B7280' }}>Searching within a 5km radius</p>
+            </div>
+          )}
+
+          {!loading && searched && (
+            <div className="results-grid">
+              {filteredResults.map(r => <ServiceCard key={r.id} service={r} />)}
+            </div>
+          )}
+
+          {!loading && searched && filteredResults.length === 0 && (
+            <div className="state-container">
+              <h2>No services found</h2>
+              <p style={{ color: '#6B7280' }}>Try selecting a different category.</p>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
